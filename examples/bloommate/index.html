@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
+  <title>Bloommate</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="hud">
+      <h1 class="hud-title">Bloommate</h1>
+      <div class="hud-meta">
+        <span class="gesture-hint" id="gesture-hint" aria-live="polite">pinch to water</span>
+        <span class="stage-label" id="stage-label">Seed</span>
+        <span class="water-meter" id="water-meter" aria-label="Water progress">
+          <span class="water-slot" data-filled="false" aria-hidden="true">○</span>
+          <span class="water-slot" data-filled="false" aria-hidden="true">○</span>
+          <span class="water-slot" data-filled="false" aria-hidden="true">○</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="stage mood-happy" id="stage-main">
+      <canvas id="flower-canvas" width="192" height="192" aria-label="Pixel flower"></canvas>
+      <p class="hint" id="hint">Pinch to water · 3 waters per stage</p>
+    </main>
+
+    <nav class="nav-bar">
+      <button type="button" class="nav-btn focusable primary" data-action="water" id="btn-water">
+        <span class="btn-icon" aria-hidden="true">&#128167;</span>
+        Water
+      </button>
+      <button type="button" class="nav-btn focusable" data-action="skip">
+        Next stage
+      </button>
+      <button type="button" class="nav-btn focusable danger" data-action="reset">
+        Reset
+      </button>
+    </nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+:root {
+  --bg: #000000;
+  --text: #e8fff0;
+  --muted: #5a8f6e;
+  --accent: #1aff7a;
+  --accent-dim: rgba(26, 255, 122, 0.35);
+  --danger: #ff4d6d;
+  --focus-glow: rgba(26, 255, 122, 0.45);
+  --water: #4db8ff;
+  --water-glow: rgba(77, 184, 255, 0.65);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+  background: var(--bg);
+  color: var(--text);
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+/* HUD */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent-dim);
+  flex-shrink: 0;
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.mood-emoji {
+  font-size: 36px;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+
+.mood-emoji.mood-happy {
+  filter: drop-shadow(0 0 10px rgba(26, 255, 122, 0.45));
+}
+
+.mood-emoji.mood-sad {
+  filter: drop-shadow(0 0 8px rgba(255, 77, 109, 0.35));
+}
+
+.hud-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hud-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.gesture-hint {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.gesture-hint.fade-out {
+  opacity: 0;
+}
+
+.gesture-hint.is-hidden {
+  display: none;
+}
+
+.stage-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 7ch;
+  text-align: right;
+}
+
+.water-meter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.water-slot {
+  display: block;
+  font-size: 32px;
+  line-height: 1;
+  width: 1.1em;
+  text-align: center;
+  flex-shrink: 0;
+  color: #8a9aa0;
+  transition: color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+}
+
+.water-slot[data-filled="true"] {
+  color: var(--water);
+  filter: drop-shadow(0 0 10px var(--water-glow));
+  transform: scale(1.1);
+}
+
+/* Canvas stage */
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 0;
+}
+
+#flower-canvas {
+  width: 384px;
+  height: 384px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: transparent;
+  transition: transform 0.6s ease;
+  transform-origin: center 85%;
+}
+
+.stage.mood-sad #flower-canvas {
+  transform: rotate(7deg) translateY(10px);
+}
+
+.stage.mood-happy #flower-canvas,
+.stage.mood-neutral #flower-canvas {
+  transform: none;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: 520px;
+}
+
+.hint.done {
+  color: var(--accent);
+}
+
+/* Nav */
+.nav-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 4px;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  flex: 1;
+  min-height: 88px;
+  padding: 8px 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: transparent;
+  border: 2px solid var(--accent-dim);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  opacity: 0.8;
+}
+
+.nav-btn .btn-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.nav-btn.primary {
+  border-color: var(--accent);
+}
+
+.nav-btn.danger {
+  color: var(--danger);
+  border-color: rgba(255, 77, 109, 0.4);
+}
+
+.nav-btn:focus {
+  outline: none;
+  opacity: 1;
+  transform: scale(0.98);
+  box-shadow: 0 0 20px var(--focus-glow);
+  border-color: var(--accent);
+}
+
+.nav-btn.danger:focus {
+  border-color: var(--danger);
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.35);
+}
+
+.nav-btn:active {
+  opacity: 1;
+  transform: scale(0.96);
+}
+
+.stage.watering #flower-canvas {
+  filter: brightness(1.15);
+}
